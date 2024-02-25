@@ -44,8 +44,11 @@ func (p *Proxy) handleHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p.services.Request.SaveRequest(r.Context(), r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
-
+	err = p.services.Request.SaveRequest(r.Context(), r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
+	if err != nil {
+		log.Println("Failed to save request")
+		return
+	}
 	copyHeader(w.Header(), resp.Header)
 	w.WriteHeader(resp.StatusCode)
 	io.Copy(w, resp.Body)
@@ -55,7 +58,11 @@ func (p *Proxy) handleHTTP(w http.ResponseWriter, r *http.Request) {
 		log.Println("Failed to parse resp data")
 		return
 	}
-	p.services.Responce.SaveResponce(r.Context(), resp.StatusCode, resp.Status, resp.Header, data)
+	err = p.services.Responce.SaveResponce(r.Context(), resp.StatusCode, resp.Status, resp.Header, data)
+	if err != nil {
+		log.Println("Failed to save responce")
+		return
+	}
 }
 
 func (p *Proxy) handleHTTPS(w http.ResponseWriter, r *http.Request) {
@@ -73,6 +80,11 @@ func (p *Proxy) handleHTTPS(w http.ResponseWriter, r *http.Request) {
 	client_conn, _, err := hijacker.Hijack()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
+	}
+	err = p.services.Request.SaveRequest(r.Context(), r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
+	if err != nil {
+		log.Println("Failed to save request")
+		return
 	}
 	go p.transfer(dest_conn, client_conn)
 	go p.transfer(client_conn, dest_conn)

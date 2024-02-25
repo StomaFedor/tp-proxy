@@ -9,6 +9,7 @@ services:
     restart: always
     ports:
       - "8080:8080"
+      - "8000:8000"
     depends_on:
       - db_proxy
     environment:
