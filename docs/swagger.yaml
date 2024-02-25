@@ -1,0 +1,70 @@
+basePath: /
+definitions:
+  handler.ClientResponseDto:
+    properties:
+      message:
+        type: string
+      payload: {}
+      status:
+        type: integer
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: API Server for Proxy Application
+  title: Proxy API
+  version: "1.0"
+paths:
+  /api/v1/request/{id}:
+    get:
+      consumes:
+      - application/json
+      operationId: request
+      parameters:
+      - description: request id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+      summary: get request by id
+      tags:
+      - request
+  /api/v1/requests:
+    get:
+      consumes:
+      - application/json
+      operationId: requests
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+      summary: get all requests
+      tags:
+      - requests
+swagger: "2.0"

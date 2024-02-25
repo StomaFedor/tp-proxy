@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
-	"tp-proxy/pkg/models"
 	"tp-proxy/pkg/repository"
+	"tp-proxy/pkg/models"
 )
 
 type RequestService struct {
@@ -19,6 +19,7 @@ func NewRequestService(repoRequest repository.Request) *RequestService {
 
 func (s *RequestService) SaveRequest(ctx context.Context,
 	method,
+	host,
 	path string,
 	headers http.Header,
 	cookies []*http.Cookie,
@@ -26,7 +27,8 @@ func (s *RequestService) SaveRequest(ctx context.Context,
 	postParams url.Values) error {
 
 	request := models.Request{Method: method,
-		Url: path,
+		Url:  path,
+		Host: host,
 	}
 	request.Headers = make(map[string]any)
 	for key, value := range headers {
@@ -36,13 +38,14 @@ func (s *RequestService) SaveRequest(ctx context.Context,
 	for _, cookie := range cookies {
 		request.Cookies[cookie.Name] = cookie.Value
 	}
-	request.GetPapams = make(map[string]any)
+	request.GetParams = make(map[string]any)
 	for key, value := range getParams {
-		request.GetPapams[key] = value
+		request.GetParams[key] = value
 	}
-	request.PostPapams = make(map[string]any)
+
+	request.PostParams = make(map[string]any)
 	for key, value := range postParams {
-		request.PostPapams[key] = value
+		request.PostParams[key] = value
 	}
 
 	reqJson, err := json.Marshal(request)
@@ -54,4 +57,12 @@ func (s *RequestService) SaveRequest(ctx context.Context,
 	}
 
 	return nil
+}
+
+func (s *RequestService) GetAll(ctx context.Context) ([]models.Request, error) {
+	return s.RepoRequest.GetAll(ctx)
+}
+
+func (s *RequestService) GetById(ctx context.Context, id int) (models.Request, error) {
+	return s.RepoRequest.GetById(ctx, id)
 }

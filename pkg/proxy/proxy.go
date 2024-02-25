@@ -44,7 +44,7 @@ func (p *Proxy) handleHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p.services.Request.SaveRequest(r.Context(), r.Method, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
+	p.services.Request.SaveRequest(r.Context(), r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
 
 	copyHeader(w.Header(), resp.Header)
 	w.WriteHeader(resp.StatusCode)

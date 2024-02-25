@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	requestTable = "\"request\""
-	responceTable = "\"request\""
+	requestTable  = "\"request\""
+	responceTable = "\"responce\""
 )
 
 type PostgresConfig struct {
