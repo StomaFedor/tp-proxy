@@ -31,15 +31,7 @@ func (h *Handler) InitRoutes() http.Handler {
 
 	apiRouter.HandleFunc("/requests", h.requests).Methods("GET")
 	apiRouter.HandleFunc("/request/{id}", h.requestById).Methods("GET")
-	// apiRouter.HandleFunc("/user", h.user).Methods("GET")
-	// apiRouter.HandleFunc("/user", h.updateUser).Methods("POST", "OPTIONS")
-	// apiRouter.HandleFunc("/user/share", h.getUserShareCridentials).Methods("GET")
-
-	// api.Use(
-	// 	h.loggingMiddleware,
-	// 	h.panicRecoveryMiddleware,
-	// 	h.corsMiddleware,
-	// )
-
+	apiRouter.HandleFunc("/repeat/{id}", h.repeatById).Methods("GET")
+	
 	return r
 }

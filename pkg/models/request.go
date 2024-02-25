@@ -5,8 +5,8 @@ type Request struct {
 	Method     string
 	Url        string
 	Host       string
-	Headers    map[string]any
-	Cookies    map[string]any
-	GetParams  map[string]any
-	PostParams map[string]any
+	Headers    map[string][]string
+	Cookies    map[string]string
+	GetParams  map[string][]string
+	PostParams map[string][]string
 }

@@ -30,20 +30,20 @@ func (s *RequestService) SaveRequest(ctx context.Context,
 		Url:  path,
 		Host: host,
 	}
-	request.Headers = make(map[string]any)
+	request.Headers = make(map[string][]string)
 	for key, value := range headers {
 		request.Headers[key] = value
 	}
-	request.Cookies = make(map[string]any)
+	request.Cookies = make(map[string]string)
 	for _, cookie := range cookies {
 		request.Cookies[cookie.Name] = cookie.Value
 	}
-	request.GetParams = make(map[string]any)
+	request.GetParams = make(map[string][]string)
 	for key, value := range getParams {
 		request.GetParams[key] = value
 	}
 
-	request.PostParams = make(map[string]any)
+	request.PostParams = make(map[string][]string)
 	for key, value := range postParams {
 		request.PostParams[key] = value
 	}

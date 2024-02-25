@@ -27,7 +27,6 @@ type Responce interface {
 		message string,
 		headers http.Header,
 		body []byte) error
-	
 }
 
 type Service struct {
@@ -37,7 +36,7 @@ type Service struct {
 
 func NewService(repo *repository.Repository) *Service {
 	return &Service{
-		Request: NewRequestService(repo.Request),
+		Request:  NewRequestService(repo.Request),
 		Responce: NewResponceService(repo.Responce),
 	}
 }

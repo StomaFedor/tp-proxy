@@ -30,7 +30,7 @@ func (s *ResponceService) SaveResponce(ctx context.Context,
 	for key, value := range headers {
 		responce.Headers[key] = value
 	}
-	responce.Body = body
+	responce.Body = string(body)
 
 	respJson, err := json.Marshal(responce)
 	if err != nil {

@@ -64,6 +64,9 @@ func (r *RequestPostgres) GetAll(ctx context.Context) ([]models.Request, error) 
 		var request models.Request
 		var data string
 		err = rows.Scan(&request.Id, &data)
+		if err != nil {
+			return nil, err
+		}
 		data = strings.ReplaceAll(data, "\\", "")
 		err = json.Unmarshal([]byte(data), &request)
 		requests = append(requests, request)
