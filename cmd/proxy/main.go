@@ -32,8 +32,8 @@ func main() {
 	srvProxy := proxy.NewServerProxy(protoc, key, cert)
 
 	db, err := repository.NewPostgresDB(ctx, repository.PostgresConfig{
-		Host:     "localhost",
-		Port:     "5433",
+		Host:     "db_proxy",
+		Port:     "5432",
 		Username: "postgres",
 		DBName:   "postgres",
 		SSLMode:  "disable",
