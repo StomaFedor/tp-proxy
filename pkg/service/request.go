@@ -20,6 +20,7 @@ func NewRequestService(repoRequest repository.Request) *RequestService {
 }
 
 func (s *RequestService) SaveRequest(ctx context.Context,
+	scheme,
 	method,
 	host,
 	path string,
@@ -31,6 +32,7 @@ func (s *RequestService) SaveRequest(ctx context.Context,
 	request := models.Request{Method: method,
 		Url:  path,
 		Host: host,
+		Scheme: scheme,
 	}
 	request.Headers = make(map[string][]string)
 	for key, value := range headers {
@@ -220,7 +222,7 @@ func makeHttpRequest(request models.Request) (*http.Request, error) {
 	}
 
 	req.Host = request.Host
-	req.URL.Scheme = "http"
+	req.URL.Scheme = request.Scheme
 	req.URL.Host = request.Host
 
 	query := req.URL.Query()

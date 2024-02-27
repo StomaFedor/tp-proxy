@@ -44,7 +44,7 @@ func (p *Proxy) handleHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = p.services.Request.SaveRequest(r.Context(), r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
+	err = p.services.Request.SaveRequest(r.Context(), r.URL.Scheme, r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
 	if err != nil {
 		log.Println("Failed to save request")
 		return
@@ -81,7 +81,7 @@ func (p *Proxy) handleHTTPS(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)
 	}
-	err = p.services.Request.SaveRequest(r.Context(), r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
+	err = p.services.Request.SaveRequest(r.Context(), r.URL.Scheme, r.Method, r.Host, r.URL.Path, r.Header, r.Cookies(), r.URL.Query(), r.Form)
 	if err != nil {
 		log.Println("Failed to save request")
 		return

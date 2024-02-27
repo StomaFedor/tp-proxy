@@ -10,6 +10,7 @@ import (
 
 type Request interface {
 	SaveRequest(ctx context.Context,
+		scheme,
 		method,
 		host,
 		path string,
