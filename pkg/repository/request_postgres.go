@@ -63,12 +63,14 @@ func (r *RequestPostgres) GetAll(ctx context.Context) ([]models.Request, error) 
 	for rows.Next() {
 		var request models.Request
 		var data string
-		err = rows.Scan(&request.Id, &data)
+		var id int
+		err = rows.Scan(&id, &data)
 		if err != nil {
 			return nil, err
 		}
 		data = strings.ReplaceAll(data, "\\", "")
 		err = json.Unmarshal([]byte(data), &request)
+		request.Id = id
 		requests = append(requests, request)
 	}
 	if err != nil {
@@ -93,11 +95,11 @@ func (r *RequestPostgres) GetById(ctx context.Context, id int) (models.Request, 
 	}
 
 	row := r.db.QueryRow(ctx, query, args...)
+
+	request, err := scanRequest(row)
 	if err != nil {
 		return models.Request{}, err
 	}
-
-	request, err := scanRequest(row)
 
 	return request, err
 }
@@ -105,11 +107,13 @@ func (r *RequestPostgres) GetById(ctx context.Context, id int) (models.Request, 
 func scanRequest(row pgx.Row) (models.Request, error) {
 	var request models.Request
 	var data string
-	if err := row.Scan(&request.Id, &data); err != nil {
+	var id int
+	if err := row.Scan(&id, &data); err != nil {
 		return models.Request{}, err
 	}
 	data = strings.ReplaceAll(data, "\\", "")
 	json.Unmarshal([]byte(data), &request)
+	request.Id = id
 
 	return request, nil
 }

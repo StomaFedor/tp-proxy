@@ -19,6 +19,8 @@ type Request interface {
 		postParams url.Values) error
 	GetAll(ctx context.Context) ([]models.Request, error)
 	GetById(ctx context.Context, id int) (models.Request, error)
+	RepeatRequest(request models.Request) (*http.Response, error)
+	CheckSqlInjection(request models.Request) ([]string, error)
 }
 
 type Responce interface {

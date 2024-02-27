@@ -32,6 +32,7 @@ func (h *Handler) InitRoutes() http.Handler {
 	apiRouter.HandleFunc("/requests", h.requests).Methods("GET")
 	apiRouter.HandleFunc("/request/{id}", h.requestById).Methods("GET")
 	apiRouter.HandleFunc("/repeat/{id}", h.repeatById).Methods("GET")
+	apiRouter.HandleFunc("/scan/{id}", h.scanById).Methods("GET")
 	
 	return r
 }

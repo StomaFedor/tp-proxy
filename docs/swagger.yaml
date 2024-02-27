@@ -100,4 +100,37 @@ paths:
       summary: get all requests
       tags:
       - requests
+  /api/v1/scan/{id}:
+    get:
+      consumes:
+      - application/json
+      operationId: scan
+      parameters:
+      - description: request id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ClientResponseDto'
+      summary: get scan request by id
+      tags:
+      - scan
 swagger: "2.0"
