@@ -53,7 +53,7 @@ func (h *Handler) requestById(w http.ResponseWriter, r *http.Request) {
 	request, err := h.services.Request.GetById(r.Context(), id)
 
 	if err != nil {
-		NewErrorClientResponseDto(r.Context(), w, http.StatusInternalServerError, "internal server error")
+		NewErrorClientResponseDto(r.Context(), w, http.StatusNotFound, "internal server error")
 		return
 	}
 
@@ -82,12 +82,12 @@ func (h *Handler) repeatById(w http.ResponseWriter, r *http.Request) {
 	}
 
 	request, err := h.services.Request.GetById(r.Context(), id)
-
 	if err != nil {
-		NewErrorClientResponseDto(r.Context(), w, http.StatusInternalServerError, "internal server error")
+		NewErrorClientResponseDto(r.Context(), w, http.StatusNotFound, "internal server error")
 		return
 	}
 
+	
 	resp, err := h.services.Request.RepeatRequest(request)
 	if err != nil {
 		NewErrorClientResponseDto(r.Context(), w, http.StatusInternalServerError, "failed to repeat request")
@@ -128,7 +128,7 @@ func (h *Handler) scanById(w http.ResponseWriter, r *http.Request) {
 
 	request, err := h.services.Request.GetById(r.Context(), id)
 	if err != nil {
-		NewErrorClientResponseDto(r.Context(), w, http.StatusInternalServerError, "internal server error")
+		NewErrorClientResponseDto(r.Context(), w, http.StatusNotFound, "internal server error")
 		return
 	}
 
